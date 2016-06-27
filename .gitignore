@@ -1,6 +1,6 @@
 # Xcode Files
-DerivedData/
+# DerivedData/
 
 # Useless LaTeX files
-*.log
-*.gz
+# *.log
+# *.gz
