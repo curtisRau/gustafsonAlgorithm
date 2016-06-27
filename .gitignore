@@ -1,0 +1,6 @@
+# Xcode Files
+DerivedData/
+
+# Useless LaTeX files
+*.log
+*.gz
