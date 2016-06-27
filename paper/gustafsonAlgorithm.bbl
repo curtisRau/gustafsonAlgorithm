@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{einstein1990gravitational}
+Albert Einstein.
+\newblock {\em On gravitational waves}.
+\newblock Springer, 1990.
+
+\bibitem{Deanna}
+Deanna Emery.
+\newblock A coherent three dimensional fft based search scheme for
+  gravitational waves from binary neurton star systems.
+\newblock {\em LIGO DCC}, (T1500307-v2), September 2015.
+
+\bibitem{abbott}
+B.P.~Abbott et~al. (LIGO Scientific~Collaboration and Virgo Collaboration).
+\newblock Observation of gravitational waves from a binary black hole merger.
+\newblock {\em Physical Review Letters}, 116(061102):1--16, 12 February 2016.
+
+\bibitem{folland}
+Gerald~B. Folland.
+\newblock {\em Fourier Analysis and its Applications}.
+\newblock Number ISBN 0-534-17097-3. Brooks and Cole Publishing Company, 1992.
+
+\bibitem{kreh}
+Martin Kreh.
+\newblock Bessel functions.
+\newblock Project for the Penn State - G{\"o}ttingen Summer School on Number
+  Theory.
+
+\bibitem{magalhaes1995determination}
+Nadja~S Magalh{\~a}es, Warren~W Johnson, Carlos Frajuca, and Odylio~D Aguiar.
+\newblock Determination of astrophysical parameters from the spherical
+  gravitational wave detector data.
+\newblock {\em Monthly Notices of the Royal Astronomical Society},
+  274(3):670--678, 1995.
+
+\bibitem{poisson1998gravitational}
+Eric Poisson.
+\newblock Gravitational waves from inspiraling compact binaries: The
+  quadrupole-moment term.
+\newblock {\em Physical Review D}, 57(8):5287, 1998.
+
+\bibitem{rader1968discrete}
+Charles Rader.
+\newblock Discrete fourier transforms when the number of data samples is prime.
+\newblock {\em Proceedings of the IEEE}, 56(6):1107--1108, 1968.
+
+\end{thebibliography}
