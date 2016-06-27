@@ -1,4 +1,4 @@
-//testing camilla
+//
 //  gustafsonAlgorithm.cpp
 //  gustafsonAlgorithm
 //

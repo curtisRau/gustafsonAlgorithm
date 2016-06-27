@@ -19,3 +19,4 @@ double*  calcBesselArrayConstN                  (unsigned int n, double xMin, do
 double*  calcBesselArrayConstZ                  (double z, unsigned int nMin, unsigned int nMax);
 double*  calcBesselArrayConstZProvidedEndpoints (double z, unsigned int nMin, unsigned int nMax, double J_nMin_z, double J_nMax_z);
 double** generateBesselJMatrix                  (double zMin, double zMax, unsigned int numOfZ, unsigned int nMin, unsigned int nMax);
+double** generateBesselJMatrix2                 (double zMin, double zMax, unsigned int numOfZ, unsigned int nMin, unsigned int nMax);

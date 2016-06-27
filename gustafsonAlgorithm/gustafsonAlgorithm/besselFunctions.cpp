@@ -269,14 +269,42 @@ double* calcBesselArrayConstZProvidedEndpoints (double z, unsigned int nMin, uns
 
 
 
-// THIS FUNCTION IS NOT NOT NOT NOT NOT GIVING ACURATE RESULTS AS IS!!!!!!!!!!!!!!!!!!!!
-// CURTIS BELIEVES IT IS DUE TO BOUNDARY CONDITIONS OUT AT ZMAX BEING VERY CLOSE TO ZERO
+// This function returns a matrix where the rows contain "J_n(x)" for differing values of n,
+// and the columns contain differing values of x.  "GammaMax" is the maximum value of Gamma,
+// that is returned, and 0 is the minimum value of Gamma.  "nGamma" is the number of Gamma
+// returned including Gamma = 0 and Gamma = GammaMax.  "nMax" is the maximum order Bessel
+// function that is returned.
 double** generateBesselJMatrix (double zMin, double zMax, unsigned int numOfZ, unsigned int nMin, unsigned int nMax) {
     unsigned int numOfN = nMax - nMin + 1;
     double dz = (zMax - zMin) / static_cast<double>(numOfZ - 1);
     
-    double* J_nMin = calcBesselArrayConstN(nMin, zMin, zMax, numOfZ, 100);  // The arbitrary accuracy factor of 100 greatly improves accuracty
-    double* J_nMax = calcBesselArrayConstN(nMax, zMin, zMax, numOfZ, 100);  // The arbitrary accuracy factor of 100 greatly improves accuracty
+    
+    // Allocate Memory For Bessel Matrix::
+    double** J = new double* [numOfZ];
+    for (unsigned int i = 0; i < numOfZ; i++) {
+        J[i] = new double [numOfN];
+    }
+    
+    
+    for (unsigned int z = 0; z < numOfZ; z++) {
+        J[z] = calcBesselArrayConstZ(z * dz, nMin, nMax);
+    }
+    
+    return J;
+}
+
+
+
+// CAUTION: THIS FUNCTION MAY NOT GIVE ACCURATE RESULTS
+// This function does the exact same thing as 'generateBesselJMatrix' but is much faster.
+// THE ACCURACY FACTOR IS ABSOLUTELY ABSOLUTELY ABSOLUTELY CRITICAL TO GETTING ACCURATE RESULTS!
+// There should be a way to dynamically determine what this factor is.  Needs work.
+double** generateBesselJMatrix2 (double zMin, double zMax, unsigned int numOfZ, unsigned int nMin, unsigned int nMax) {
+    unsigned int numOfN = nMax - nMin + 1;
+    double dz = (zMax - zMin) / static_cast<double>(numOfZ - 1);
+    
+    double* J_nMin = calcBesselArrayConstN(nMin, zMin, zMax, numOfZ, 800);  // The arbitrary accuracy factor of 800 greatly improves accuracty
+    double* J_nMax = calcBesselArrayConstN(nMax, zMin, zMax, numOfZ, 800);  // The arbitrary accuracy factor of 800 greatly improves accuracty
     
     // Unit Test (Print the J_nMin and J_nMax arrays)::
     // --------------------------------------------------------
