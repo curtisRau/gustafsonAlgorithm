@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B95B79AD1D2239A600E2F8A1 /* unitTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B95B79AB1D2239A600E2F8A1 /* unitTests.cpp */; };
 		B9EC99561D21B76A003212BC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9EC99551D21B76A003212BC /* main.cpp */; };
 		B9EC99711D21B83B003212BC /* gustafsonAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9EC996F1D21B83B003212BC /* gustafsonAlgorithm.cpp */; };
 		B9EC99741D21BA8B003212BC /* besselFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9EC99721D21BA8B003212BC /* besselFunctions.cpp */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B95B79AB1D2239A600E2F8A1 /* unitTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unitTests.cpp; sourceTree = "<group>"; };
+		B95B79AC1D2239A600E2F8A1 /* unitTests.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitTests.hpp; sourceTree = "<group>"; };
 		B9EC99521D21B76A003212BC /* gustafsonAlgorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gustafsonAlgorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9EC99551D21B76A003212BC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B9EC996F1D21B83B003212BC /* gustafsonAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gustafsonAlgorithm.cpp; sourceTree = "<group>"; };
@@ -68,6 +71,8 @@
 				B9EC996F1D21B83B003212BC /* gustafsonAlgorithm.cpp */,
 				B9EC99731D21BA8B003212BC /* besselFunctions.hpp */,
 				B9EC99721D21BA8B003212BC /* besselFunctions.cpp */,
+				B95B79AC1D2239A600E2F8A1 /* unitTests.hpp */,
+				B95B79AB1D2239A600E2F8A1 /* unitTests.cpp */,
 			);
 			path = gustafsonAlgorithm;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9EC99711D21B83B003212BC /* gustafsonAlgorithm.cpp in Sources */,
+				B95B79AD1D2239A600E2F8A1 /* unitTests.cpp in Sources */,
 				B9EC99561D21B76A003212BC /* main.cpp in Sources */,
 				B9EC99741D21BA8B003212BC /* besselFunctions.cpp in Sources */,
 			);
@@ -251,6 +257,7 @@
 				B9EC995B1D21B76A003212BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -34,6 +34,7 @@ unsigned int calcNumberStepsInPhase (double Gamma, unsigned int stepsPerOscillat
 }
 
 
+// THIS FUNCTION SHOULD BE CHECKED BEFORE SPENDING TOO MUCH RUNNING ON REAL DATA
 // Fold a frequency.
 // "f"   is the frequency to be folded
 // "fnq" is the nyquist or folding frequency
@@ -42,7 +43,7 @@ unsigned int foldIntFrequency (int f, unsigned int fnq) {
     f = abs(f);
     unsigned int ffolded = f;
     if (f > fnq) {
-        unsigned int n = static_cast<unsigned int>(ceil(static_cast<double>(f)/static_cast<double>(fnq))) % 2;
+        unsigned int n = static_cast<unsigned int>(ceil(static_cast<double>(f)/static_cast<double>(fnq))) % 2;  // Folding zone # (mod 2)
         switch (n) {
             case 0:                         // Even folding zone
                 ffolded = fnq - f % fnq;    // Mirror Frequency
@@ -56,6 +57,7 @@ unsigned int foldIntFrequency (int f, unsigned int fnq) {
 }
 
 
+// THIS FUNCTION SHOULD BE CHECKED BEFORE SPENDING TOO MUCH RUNNING ON REAL DATA
 // Fold a frequency.
 // "f"   is the frequency to be folded
 // "fnq" is the nyquist or folding frequency
@@ -64,7 +66,7 @@ complex<double> foldIntFrequencyPhase (complex<double>* F, int f, unsigned int f
     f = abs(f);
     double phase = 1.0;
     if (f > fnq) {
-        unsigned int n = static_cast<unsigned int>(ceil(static_cast<double>(f)/static_cast<double>(fnq))) % 2;
+        unsigned int n = static_cast<unsigned int>(ceil(static_cast<double>(f)/static_cast<double>(fnq))) % 2;  // Folding zone # (mod 2)
         switch (n) {
             case 0:                     // Even folding zone
                 f = fnq - f % fnq;      // Mirror Frequency
@@ -88,16 +90,12 @@ complex<double> foldIntFrequencyPhase (complex<double>* F, int f, unsigned int f
 // omega is the value of "omega0" we are trying.
 // f1 CANNOT BE 0 BECAUSE DIVISION BY 0!
 // fMax CANNOT BE LESS THAN f!
-double gustafsonAlgorithm (complex<double>* F, unsigned int nyquistF, double* besselArray, int besselArrayLength, unsigned int nSidebandsSum,
+double gustafsonAlgorithm (complex<double>* F, unsigned int nyquistF, double* besselArray, unsigned int nSidebandsSum,
                            unsigned int f0, unsigned int f1, double phi1) {
     
     const complex<double> I   (0.0, -phi1 + M_PI_2);
     const complex<double> J   (0.0, -phi1 - M_PI_2);
     complex<double> sum (0.0, 0.0);
-    
-    if (nSidebandsSum > besselArrayLength) {
-        nSidebandsSum = besselArrayLength;
-    }
     
     for (int n = -static_cast<int>(nSidebandsSum); n < 0; n++) {
         sum += exp(I * static_cast<double>(n)) * besselArray[abs(n)] * foldIntFrequencyPhase(F, f0 + n*f1, nyquistF);
