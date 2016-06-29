@@ -12,10 +12,3 @@
 #include <stdio.h>
 
 #endif
-
-class progressBar {
-public:
-    progressBar (unsigned int windowWidth, unsigned int numIttersMax);       // Constructor??
-    double progress;
-    void itterate (unsigned int windowWidth, unsigned int numIttersMax);
-};

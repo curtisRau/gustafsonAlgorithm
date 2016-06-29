@@ -10,15 +10,3 @@
 #include <iostream>
 
 using namespace std;
-
-
-// Progress Bar Constructor
-progressBar::progressBar(unsigned int windowWidth, unsigned int numIttersMax) {
-    itterate(windowWidth, numIttersMax);
-}
-
-// Progress Bar Member Function
-void progressBar::itterate (unsigned int windowWidth, unsigned int numIttersMax) {
-    
-    cout << "-";
-}
