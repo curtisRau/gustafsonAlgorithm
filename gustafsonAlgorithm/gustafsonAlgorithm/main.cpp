@@ -11,6 +11,7 @@
 #include <complex>                      // For working with complex numbers.
 #include "gustafsonAlgorithm.hpp"
 #include "besselFunctions.hpp"
+#include "fileIO.hpp"
 #include "unitTests.hpp"
 
 using namespace std;
@@ -38,8 +39,10 @@ int main(int argc, const char * argv[]) {
 
     // Declare Input Parameters::
     //------------------------------------------------------------------------------------------
-    unsigned int numOfCandidates;       // The number of posible candidates to return.
+    bool         fileValidity;
+    ifstream     file;
     string       path2frequencySeries;
+    string       pathToOutput;
     double       sampleRate;
     double       df;
     double       modIndxMin;
@@ -54,11 +57,7 @@ int main(int argc, const char * argv[]) {
 
     // Prompt User For Program Parameters::
     //------------------------------------------------------------------------------------------
-    cout << "Enter the Number of Possible Candidates to Return" << endl;
-    cin >> numOfCandidates;
-
-    bool fileValidity = false;
-    ifstream file;
+    fileValidity = false;
     while (fileValidity == false) {
         cout << "Enter Path to Frequency Series Data (/Volumes/userFilesPartition/Users/curtisrau/Desktop/output/frequencySeries.csv)" << endl;
         cin >> path2frequencySeries;
@@ -66,7 +65,16 @@ int main(int argc, const char * argv[]) {
         fileValidity = file.is_open();
     }
     file.close();
-
+    
+    fileValidity = false;
+    while (fileValidity == false) {
+        cout << "Enter Path to Directory where Output will be Written" << endl;
+        cin >> pathToOutput;
+        file.open(makeFileName(pathToOutput, 0.0, 0.0, 0.0, 0.0), ios::out | ios::trunc);
+        fileValidity = file.is_open();
+    }
+    file.close();
+    
 
     cout << "Enter Sample Rate [Hz]" << endl;
     cin >> sampleRate;
@@ -183,6 +191,7 @@ int main(int argc, const char * argv[]) {
             for (unsigned int fc = 0; fc < nF0; fc++) {                 // -- Search over the Carrier Frequency --
                 carrFreq = nF0Min + fc;
                 for (unsigned int fm = 0; fm < nF1; fm++) {             // -- Search over the Modulation Frequency --
+                    modlFreq = nF1Min + fm;
                     output[fc][fm] = gustafsonAlgorithm(freqSeries,
                                                         natNyquistF,
                                                         J,
@@ -190,6 +199,14 @@ int main(int argc, const char * argv[]) {
                                                         carrFreq,
                                                         modlFreq,
                                                         modPhase);
+                    
+                    // Save the output -- This is more for debugging purposes
+                    // until a better method for processing the results
+                    // can be determined
+                    saveMatrix4Mathematica(makeFileName(pathToOutput, modIndx, modPhase, carrFreq * df, modlFreq * df),
+                                           output,
+                                           nF0,
+                                           nF1);
                 }
             }
         }
@@ -203,6 +220,11 @@ int main(int argc, const char * argv[]) {
     // Deallocate Memory::
     //------------------------------------------------------------------------------------------
     delete [] freqSeries;
+    delete [] J;
+    for (unsigned int i = 0; i < nF0; i++) {
+        delete [] output[i];
+    }
+    delete [] output;
     
     
     return 0;
