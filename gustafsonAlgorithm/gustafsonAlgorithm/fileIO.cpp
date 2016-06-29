@@ -9,8 +9,21 @@
 #include "fileIO.hpp"
 #include <iostream>
 #include <fstream>              // for working with files.
+#include <complex>              // For working with complex numbers.
 
 using namespace std;
+
+
+void loadComplxArray (complex<double>* data, size_t length, const string& file_path) {
+    ifstream file;
+    file.open(file_path.c_str(), ios::binary | ios::in);
+    if (file.is_open()) {
+        file.read(reinterpret_cast<char*>(data), streamsize(length * sizeof(complex<double>)));
+    } else {
+        cout << "File '" << file_path << "' did not load!" << endl;
+    }
+    file.close();
+}
 
 
 void saveArray4Mathematica (const char* filename, double* array, unsigned int arraySize) {
@@ -56,11 +69,9 @@ void saveMatrix4Mathematica (string filename, double** matrix, unsigned int matr
 // the modulation index, modulation phase, carrier frequency, and modulation frequency.
 // The function returns the full file path, ie. the directory concatinated with the
 // descriptive filename.
-string makeFileName (string directory, double modIndx, double modPhase, double carFreq, double modFreq) {
+string makeFileName (string directory, double modIndx, double modPhase) {
     return directory + "modIndx"  + to_string(modIndx)
                      + "modPhase" + to_string(modPhase)
-                     + "carFreq"  + to_string(carFreq)
-                     + "modFreq"  + to_string(modFreq)
                      + ".csv";
 }
 

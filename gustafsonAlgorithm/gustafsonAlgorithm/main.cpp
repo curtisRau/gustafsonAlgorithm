@@ -18,19 +18,6 @@ using namespace std;
 typedef numeric_limits<double> dbl;
 
 
-void loadComplxArray (complex<double>* data, size_t length, const string& file_path)
-{
-    ifstream file;
-    file.open(file_path.c_str(), ios::binary | ios::in);
-    if (file.is_open()) {
-        file.read(reinterpret_cast<char*>(data), streamsize(length * sizeof(complex<double>)));
-    } else {
-        cout << "File '" << file_path << "' did not load!" << endl;
-    }
-    file.close();
-}
-
-
 
 int main(int argc, const char * argv[]) {
     cout.precision(dbl::max_digits10);          // Set the output to display the maximum precision
@@ -70,7 +57,7 @@ int main(int argc, const char * argv[]) {
     while (fileValidity == false) {
         cout << "Enter Path to Directory where Output will be Written" << endl;
         cin >> pathToOutput;
-        file.open(makeFileName(pathToOutput, 0.0, 0.0, 0.0, 0.0), ios::out | ios::trunc);
+        file.open(makeFileName(pathToOutput, 0.0, 0.0), ios::out | ios::trunc);
         fileValidity = file.is_open();
     }
     file.close();
@@ -124,23 +111,40 @@ int main(int argc, const char * argv[]) {
     unsigned int nF1           = nF1Max - nF1Min + 1;
 
     unsigned int nStepsModPhaseMax = calcNumberStepsInPhase(modIndxMax, nStepsModPhase);
-
+    
+    
+    // Calculate the Size of the Output::
+    //------------------------------------------------------------------------------------------
+    unsigned int numFilesWritten = 0;
+    double       sizeOfOutputFiles;
+    double       outputSize;
+    for (unsigned int g = 0; g < NMI; g++) {
+        numFilesWritten += calcNumberStepsInPhase(modIndxMin + dModIndx * g, nStepsModPhase);
+    }
+    sizeOfOutputFiles = nF0 * nF1 * sizeof(double);
+    sizeOfOutputFiles /= 1000.0;                        // Convert to KiloBytes
+    outputSize = numFilesWritten * sizeOfOutputFiles;
+    outputSize /= 1000.0;                            // Convert to MegaBytes
+    
 
     // Print Useful Parameters::
     //------------------------------------------------------------------------------------------
-    cout << " Output File Size                             = " << nStepsModPhaseMax * NMI * nF0 * nF1 * sizeof(double) << " bites" << endl;
-    cout << " -------------- Search Parameters ------------- " <<                            endl;
-    cout << "Number of Steps in Carrier Frequency          = " << nF0                     << endl;
-    cout << "Number of Steps in Modulation Frequency       = " << nF1                     << endl;
-    cout << "Number of Steps in Modulation Index           = " << NMI                     << endl;
-    cout << "Maximum Number of Steps in Phase              = " << nStepsModPhaseMax       << endl;
-    cout << "Maximum Number of Sidebands that will be used = " << nSidebandsMax           << endl;
-    cout << " -------------- Useful Parameters ------------- " <<                            endl;
-    cout << "Number of Points in the Time Series           = " << NTS                     << endl;
-    cout << "Number of Points in the Frequency Series      = " << NFS                     << endl;
-    cout << "Nyquist Frequency                             = " << nyquistF       << " Hz" << endl;
-    cout << "Duration of Time Series                       = " << duration       << " s"  << endl;
-    cout << " -------------- Computation Times ------------- " <<                            endl;
+    cout << " -------------- Output Files Info ------------- " <<                               endl;
+    cout << " Number of Files to be Written                = " << numFilesWritten            << endl;
+    cout << " Size of Each File to be Written              = " << sizeOfOutputFiles << " KB" << endl;
+    cout << " Total Bytes to be Written                    = " << outputSize        << " MB" << endl;
+    cout << " -------------- Search Parameters ------------- " <<                               endl;
+    cout << "Number of Steps in Carrier Frequency          = " << nF0                        << endl;
+    cout << "Number of Steps in Modulation Frequency       = " << nF1                        << endl;
+    cout << "Number of Steps in Modulation Index           = " << NMI                        << endl;
+    cout << "Maximum Number of Steps in Phase              = " << nStepsModPhaseMax          << endl;
+    cout << "Maximum Number of Sidebands that will be used = " << nSidebandsMax              << endl;
+    cout << " -------------- Useful Parameters ------------- " <<                               endl;
+    cout << "Number of Points in the Time Series           = " << NTS                        << endl;
+    cout << "Number of Points in the Frequency Series      = " << NFS                        << endl;
+    cout << "Nyquist Frequency                             = " << nyquistF          << " Hz" << endl;
+    cout << "Duration of Time Series                       = " << duration          << " s"  << endl;
+    cout << " -------------- Computation Times ------------- " <<                               endl;
 
 
     // IMPLEMENTING THE GUSTAFSON ALGORITHM
@@ -199,16 +203,15 @@ int main(int argc, const char * argv[]) {
                                                         carrFreq,
                                                         modlFreq,
                                                         modPhase);
-                    
-                    // Save the output -- This is more for debugging purposes
-                    // until a better method for processing the results
-                    // can be determined
-                    saveMatrix4Mathematica(makeFileName(pathToOutput, modIndx, modPhase, carrFreq * df, modlFreq * df),
-                                           output,
-                                           nF0,
-                                           nF1);
                 }
             }
+            // Save the output -- This is more for debugging purposes
+            // until a better method for processing the results
+            // can be determined
+            saveMatrix4Mathematica(makeFileName(pathToOutput, modIndx, modPhase),
+                                   output,
+                                   nF0,
+                                   nF1);
         }
     }
     
